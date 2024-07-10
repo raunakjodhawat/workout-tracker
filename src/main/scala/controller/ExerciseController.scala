@@ -31,12 +31,12 @@ class ExerciseController {
     )
   }
 
-  def getExerciseConstants: String = {
+  def getExerciseConstants: Map[String, Seq[String]] = {
     Map(
       "MuscleGroup" -> MuscleGroup.values.map(_.toString),
       "Equipment" -> Equipment.values.map(_.toString),
       "ForceType" -> ForceType.values.map(_.toString),
       "Mechanics" -> Mechanics.values.map(_.toString)
-    ).asJson.noSpaces
+    )
   }
 }
