@@ -2,7 +2,7 @@ package com.raunakjodhawat
 package controller
 
 import models.{Equipment, Exercise, ForceType, Mechanics, MuscleGroup}
-
+import io.circe.syntax._
 class ExerciseController {
   def createExercise(
       name: String,
@@ -31,4 +31,12 @@ class ExerciseController {
     )
   }
 
+  def getExerciseConstants: String = {
+    Map(
+      "MuscleGroup" -> MuscleGroup.values.map(_.toString),
+      "Equipment" -> Equipment.values.map(_.toString),
+      "ForceType" -> ForceType.values.map(_.toString),
+      "Mechanics" -> Mechanics.values.map(_.toString)
+    ).asJson.noSpaces
+  }
 }

@@ -8,7 +8,7 @@ object ForceType {
   case object Pull extends ForceType
   case object Other extends ForceType
 
-  val values = Seq(
+  val values: Seq[ForceType] = Seq(
     Push,
     Pull,
     Other

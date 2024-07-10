@@ -7,7 +7,7 @@ object Mechanics {
   case object Compound extends Mechanics
   case object Isolation extends Mechanics
 
-  val values = Seq(
+  val values: Seq[Mechanics] = Seq(
     Compound,
     Isolation
   )

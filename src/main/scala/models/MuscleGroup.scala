@@ -41,7 +41,7 @@ object MuscleGroup {
   case object Calves extends MuscleGroup
   case object Quadriceps extends MuscleGroup
 
-  val values = Seq(
+  val values: Seq[MuscleGroup] = Seq(
     Biceps,
     Triceps,
     Forearms,

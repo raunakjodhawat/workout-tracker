@@ -11,7 +11,7 @@ object Equipment {
   case object Cable extends Equipment
   case object Other extends Equipment
 
-  val values = Seq(
+  val values: Seq[Equipment] = Seq(
     Dumbbell,
     Barbell,
     Kettlebell,
