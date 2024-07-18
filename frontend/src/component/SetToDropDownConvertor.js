@@ -1,10 +1,9 @@
 import styles from './setToDropDownConvertor.module.css';
 
-export default function SetToDropDownConvertor({options, label}) {
+export default function SetToDropDownConvertor({options, selected, id}) {
     return (
         <div className={styles.container}>
-            <select className={styles.select} required>
-                <option value="">Select an option</option>
+            <select id = {id} className={styles.select} required defaultValue={selected}>
                 {Array.from(options).map((v, i) => (
                     <option key={i}>{v}</option>
                 ))}

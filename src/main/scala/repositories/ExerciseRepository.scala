@@ -62,4 +62,15 @@ class ExerciseRepository(db: Database, exercises: TableQuery[ExerciseTable]) {
       else IO.raiseError(new Exception("Failed to update exercise"))
     )
   }
+
+  def deleteExercise(id: Long): IO[Unit] = {
+    IO.fromFuture(
+      IO(
+        db.run(exercises.filter(_.id === id).delete)
+      )
+    ).flatMap(x =>
+      if (x == 1) IO.unit
+      else IO.raiseError(new Exception("Failed to delete exercise"))
+    )
+  }
 }

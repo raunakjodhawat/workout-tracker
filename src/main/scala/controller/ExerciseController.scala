@@ -112,6 +112,17 @@ class ExerciseController(er: ExerciseRepository) {
             )
           )
         }
+      case DELETE -> Root / "exercise" / "delete" / LongVar(id) =>
+        deleteExercise(id)
+        Ok("Exercise deleted").map(
+          _.putHeaders(
+            Header.Raw
+              .apply(
+                CIString("Access-Control-Allow-Origin"),
+                "http://localhost:3000"
+              )
+          )
+        )
     }
     .orNotFound
   def getExercises: Seq[DBExercise] = {
@@ -160,6 +171,7 @@ class ExerciseController(er: ExerciseRepository) {
     )
     .unsafeRunSync()
 
+  def deleteExercise(id: Long): Unit = er.deleteExercise(id).unsafeRunSync()
   def getExerciseConstants: Map[String, SortedSet[String]] = {
     Map(
       "MuscleGroup" -> MuscleGroup.values.map(_.toString),
