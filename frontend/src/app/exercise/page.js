@@ -23,15 +23,32 @@ export default function Exercise() {
   }, []);
   
   return (
-    <main className={styles.main}>
-    <form className={styles.form} type="submit">
-      <input className={styles.input} type="text" placeholder="Exercise name" />
-      <SetToDropDownConvertor className={styles.select} options={muscleGroups} label = "Muscle Group" />
-      <SetToDropDownConvertor className={styles.select} options={equipment} label = "Equipment" />
-      <SetToDropDownConvertor className={styles.select} options={forceType} label = "Type" />
-      <SetToDropDownConvertor className={styles.select} options={mechanics} label = "Mechanics" />
-      <input className={styles.submit} type="submit" value="Submit" />
-    </form>
+    <main>
+    <table className={styles.table}>
+      <thead>
+        <tr>
+          <th>Exercise Name</th>
+          <th>Muscle Group</th>
+          <th>Equipment</th>
+          <th>Type</th>
+          <th>Mechanics</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input className={styles.input} type="text" placeholder="Exercise name" /></td>
+          <td><SetToDropDownConvertor className={styles.select} options={muscleGroups} label = "Muscle Group" /></td>
+          <td><SetToDropDownConvertor className={styles.select} options={equipment} label = "Equipment" /></td>
+          <td><SetToDropDownConvertor className={styles.select} options={forceType} label = "Type" /></td>
+          <td><SetToDropDownConvertor className={styles.select} options={mechanics} label = "Mechanics" /></td>
+          <td>
+          <input className={styles.submit} type="submit" value="Save" />
+          <input className={styles.submit} type="submit" value="Delete" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
     </main>
   );
 }

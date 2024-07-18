@@ -9,10 +9,14 @@ lazy val root = (project in file("."))
   )
 
 val circeVersion = "0.14.9"
-
+val slickVersion = "3.5.1"
 val http4sVersion = "0.23.27"
 
 libraryDependencies ++= Seq(
+  // database
+  "com.typesafe.slick" %% "slick" % slickVersion,
+  "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,
+  "org.postgresql" % "postgresql" % "42.7.3",
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
   "io.circe" %% "circe-parser" % circeVersion,

@@ -1,58 +1,48 @@
 package com.raunakjodhawat
 package models
 
-sealed trait MuscleGroup {
-  def isArm: Boolean =
-    this == MuscleGroup.Biceps || this == MuscleGroup.Triceps || this == MuscleGroup.Forearms
+import io.circe.{Decoder, Encoder}
+import slick.ast.TypedType
+import slick.jdbc.H2Profile.MappedColumnType
+import slick.jdbc.PostgresProfile.api._
 
-  def isLeg: Boolean =
-    this == MuscleGroup.Glutes || this == MuscleGroup.Hamstrings || this == MuscleGroup.Calves || this == MuscleGroup.Quadriceps
+object MuscleGroup extends Enumeration {
+  type MuscleGroup = Value
+  val Biceps, Triceps, Forearms, Shoulders, Trapezius, Back, Abs, Chest, Glutes,
+      Hamstrings, Calves, Quadriceps = Value
 
-  def isShoulder: Boolean =
-    this == MuscleGroup.Shoulders || this == MuscleGroup.Trapezius
+  def isArm(muscle: MuscleGroup): Boolean = muscle match {
+    case Biceps | Triceps | Forearms => true
+    case _                           => false
+  }
 
-  def isChest: Boolean = this == MuscleGroup.Chest
+  def isLeg(muscle: MuscleGroup): Boolean = muscle match {
+    case Glutes | Hamstrings | Calves | Quadriceps => true
+    case _                                         => false
+  }
 
-  def isBack: Boolean = this == MuscleGroup.Back
+  def isShoulder(muscle: MuscleGroup): Boolean = muscle match {
+    case Shoulders | Trapezius => true
+    case _                     => false
+  }
 
-  def isAbs: Boolean = this == MuscleGroup.Abs
+  def isChest(muscle: MuscleGroup): Boolean = muscle == Chest
+  def isBack(muscle: MuscleGroup): Boolean = muscle == Back
+  def isAbs(muscle: MuscleGroup): Boolean = muscle == Abs
 
-  def isUncategorized: Boolean =
-    !isArm && !isLeg && !isShoulder && !isChest && !isBack && !isAbs
-}
+  def isUncategorized(muscle: MuscleGroup): Boolean =
+    !isArm(muscle) && !isLeg(muscle) && !isShoulder(muscle) && !isChest(
+      muscle
+    ) && !isBack(muscle) && !isAbs(muscle)
 
-object MuscleGroup {
-  // arms
-  case object Biceps extends MuscleGroup
-  case object Triceps extends MuscleGroup
-  case object Forearms extends MuscleGroup
-  // Shoulder
-  case object Shoulders extends MuscleGroup
-  case object Trapezius extends MuscleGroup
-  // Back
-  case object Back extends MuscleGroup
-  // Core
-  case object Abs extends MuscleGroup
-  // Chest
-  case object Chest extends MuscleGroup
-  // Legs
-  case object Glutes extends MuscleGroup
-  case object Hamstrings extends MuscleGroup
-  case object Calves extends MuscleGroup
-  case object Quadriceps extends MuscleGroup
+  implicit val muscleGroupTypedType: TypedType[MuscleGroup] =
+    MappedColumnType.base[MuscleGroup, String](
+      e => e.toString,
+      s => MuscleGroup.withName(s)
+    )
 
-  val values: Seq[MuscleGroup] = Seq(
-    Biceps,
-    Triceps,
-    Forearms,
-    Shoulders,
-    Trapezius,
-    Back,
-    Abs,
-    Chest,
-    Glutes,
-    Hamstrings,
-    Calves,
-    Quadriceps
-  )
+  implicit val encodeMuscleGroup: Encoder[MuscleGroup] =
+    Encoder.encodeString.contramap[MuscleGroup](_.toString)
+  implicit val decodeMuscleGroup: Decoder[MuscleGroup] =
+    Decoder.decodeString.map(MuscleGroup.withName)
 }

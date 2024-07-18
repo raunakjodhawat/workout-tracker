@@ -1,21 +1,34 @@
 package com.raunakjodhawat
 
-import controller.{Controller, ExerciseController}
+import controller.Controller
 
 import cats.effect._
 import com.comcast.ip4s._
+import models.ExerciseTable
+
 import org.http4s.ember.server._
+import slick.jdbc.PostgresProfile.api._
 
 object Main extends IOApp {
-  val ec = new ExerciseController()
+  private val db = Database.forConfig("postgres")
+  private val exercises = TableQuery[ExerciseTable]
+  def run(args: List[String]): IO[ExitCode] = {
+    IO.fromFuture(
+      IO(
+        db.run(DBIO.seq(exercises.schema.createIfNotExists))
+      )
+    ).flatMap { _ =>
+      {
+        EmberServerBuilder
+          .default[IO]
+          .withHost(ipv4"0.0.0.0")
+          .withPort(port"8080")
+          .withHttpApp(new Controller(db, exercises).httpApp)
+          .build
+          .use(_ => IO.never)
+          .as(ExitCode.Success)
+      }
+    }
 
-  def run(args: List[String]): IO[ExitCode] =
-    EmberServerBuilder
-      .default[IO]
-      .withHost(ipv4"0.0.0.0")
-      .withPort(port"8080")
-      .withHttpApp(new Controller().httpApp)
-      .build
-      .use(_ => IO.never)
-      .as(ExitCode.Success)
+  }
 }

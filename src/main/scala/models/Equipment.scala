@@ -1,23 +1,21 @@
 package com.raunakjodhawat
 package models
+import io.circe.{Decoder, Encoder}
+import slick.ast.TypedType
+import slick.jdbc.H2Profile.MappedColumnType
+import slick.jdbc.PostgresProfile.api._
 
-sealed trait Equipment
-object Equipment {
-  case object Dumbbell extends Equipment
-  case object Barbell extends Equipment
-  case object Kettlebell extends Equipment
-  case object Bodyweight extends Equipment
-  case object Machine extends Equipment
-  case object Cable extends Equipment
-  case object Other extends Equipment
+object Equipment extends Enumeration {
+  type Equipment = Value
+  val Dumbbell, Barbell, Kettlebell, Bodyweight, Machine, Cable, Other = Value
 
-  val values: Seq[Equipment] = Seq(
-    Dumbbell,
-    Barbell,
-    Kettlebell,
-    Bodyweight,
-    Machine,
-    Cable,
-    Other
-  )
+  implicit val equipmentTypedType: TypedType[Equipment] =
+    MappedColumnType.base[Equipment, String](
+      e => e.toString,
+      s => Equipment.withName(s)
+    )
+  implicit val encodeEquipment: Encoder[Equipment] =
+    Encoder.encodeString.contramap[Equipment](_.toString)
+  implicit val decodeEquipment: Decoder[Equipment] =
+    Decoder.decodeString.map(Equipment.withName)
 }
