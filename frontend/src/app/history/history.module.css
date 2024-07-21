@@ -1,0 +1,29 @@
+/* history.module.css */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.record {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editButton, .deleteButton {
+    margin-left: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.exercise {
+    margin-top: 16px;
+}

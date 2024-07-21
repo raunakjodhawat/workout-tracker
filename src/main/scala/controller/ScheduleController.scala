@@ -26,23 +26,12 @@ class ScheduleController(sr: ScheduleRepository) {
         case GET -> Root / "schedule" / "all" =>
           Ok(getAllSchedules)
         case GET -> Root / "schedule" / "date" / date =>
-          getScheduleByDate(date) match {
-            case Some(schedule) =>
-              Ok(schedule)
-            case None =>
-              NotFound("Schedule not found")
-          }
+          Ok(getScheduleByDate(date))
         case req @ POST -> Root / "schedule" / "create" =>
-          println("Creating schedule")
           req
             .decode[Schedule] { schedule =>
               createSchedule(schedule)
               Created("Schedule created")
-            }
-            .handleErrorWith { error =>
-              IO(
-                println(s"Error decoding schedule: ${error.getMessage}")
-              ) *> BadRequest("Error decoding schedule")
             }
         case req @ PUT -> Root / "schedule" / "update" / LongVar(id) =>
           req.decode[Schedule] { schedule =>
@@ -50,15 +39,13 @@ class ScheduleController(sr: ScheduleRepository) {
             Ok("Schedule updated")
           }
       }
-  def createSchedule(schedule: Schedule): Unit = {
-    println("inside create schedule")
+  def createSchedule(schedule: Schedule): Unit =
     sr.createSchedule(schedule).unsafeRunSync()
-  }
 
   def getAllSchedules: Seq[DBSchedule] =
     sr.getAllSchedules.unsafeRunSync()
 
-  def getScheduleByDate(date: String): Option[DBSchedule] =
+  def getScheduleByDate(date: String): Seq[DBSchedule] =
     sr.getScheduleByDate(date).unsafeRunSync()
 
   def updateSchedule(id: Long, schedule: Schedule): Unit =

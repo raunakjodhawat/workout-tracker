@@ -12,9 +12,9 @@ import slick.jdbc.PostgresProfile.api._
 import slick.lifted.{ProvenShape, Rep, Tag}
 
 case class WeightAndReps(
-    weight: Double,
+    weight: Option[Double],
     unit: WeightUnit,
-    reps: Int
+    reps: Option[Int]
 )
 
 case class ExerciseSet(
