@@ -3,14 +3,17 @@ package models
 
 import models.SetType.SetType
 
+import com.raunakjodhawat.models.WeightUnit.WeightUnit
 import io.circe.generic.auto._
-import io.circe._, io.circe.parser._, io.circe.syntax._
-
+import io.circe._
+import io.circe.parser._
+import io.circe.syntax._
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted.{ProvenShape, Rep, Tag}
 
 case class WeightAndReps(
     weight: Double,
+    unit: WeightUnit,
     reps: Int
 )
 
@@ -22,11 +25,17 @@ case class ExerciseSet(
 object Schedule {
   val simpleDateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd")
 
+  implicit val encodeWeightUnit: Encoder[WeightUnit] =
+    Encoder.encodeString.contramap[WeightUnit](_.toString)
+  implicit val decideWeightUnit: Decoder[WeightUnit] =
+    Decoder.decodeString.map(WeightUnit.withName)
   implicit val encodeWeightAndReps: Encoder[WeightAndReps] =
-    Encoder.forProduct2("weight", "reps")(wr => (wr.weight, wr.reps))
+    Encoder.forProduct3("weight", "unit", "reps")(wr =>
+      (wr.weight, wr.unit, wr.reps)
+    )
 
   implicit val decodeWeightAndReps: Decoder[WeightAndReps] =
-    Decoder.forProduct2("weight", "reps")(WeightAndReps.apply)
+    Decoder.forProduct3("weight", "unit", "reps")(WeightAndReps.apply)
 
   implicit val encodeExerciseSet: Encoder[ExerciseSet] =
     Encoder.forProduct2("exerciseName", "sets")(es =>

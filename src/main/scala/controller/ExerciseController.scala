@@ -28,7 +28,7 @@ import org.http4s.circe.CirceEntityCodec._
 import scala.collection.SortedSet
 class ExerciseController(er: ExerciseRepository) {
 
-  val httpApp: Kleisli[IO, Request[IO], Response[IO]] = HttpRoutes
+  val httpApp: HttpRoutes[IO] = HttpRoutes
     .of[IO] {
       case GET -> Root / "exercise" / "defaults" =>
         Ok(getExerciseConstants)
@@ -70,7 +70,6 @@ class ExerciseController(er: ExerciseRepository) {
         deleteExercise(id)
         Ok("Exercise deleted")
     }
-    .orNotFound
   def getExercises: Seq[DBExercise] = {
     er.getAllExercises.unsafeRunSync()
   }

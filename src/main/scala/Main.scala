@@ -18,7 +18,12 @@ object Main extends IOApp {
   def run(args: List[String]): IO[ExitCode] = {
     IO.fromFuture(
       IO(
-        db.run(DBIO.seq(exercises.schema.createIfNotExists))
+        db.run(
+          DBIO.seq(
+            exercises.schema.createIfNotExists,
+            schedules.schema.createIfNotExists
+          )
+        )
       )
     ).flatMap { _ =>
       {

@@ -8,8 +8,9 @@ import slick.jdbc.PostgresProfile.api._
 
 class ScheduleRepository(db: Database, exercises: TableQuery[ScheduleTable]) {
   def createSchedule(schedule: Schedule): IO[Unit] = {
+    println("inside create schedule repository")
     val dbSchedule = schedule.toDBSchedule()
-
+    println(dbSchedule)
     IO.fromFuture(
       IO(
         db.run(exercises += dbSchedule)

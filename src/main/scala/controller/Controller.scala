@@ -21,5 +21,5 @@ class Controller(
   private val sc = new ScheduleController(sr)
 
   val httpApp: Kleisli[IO, Request[IO], Response[IO]] =
-    ec.httpApp <+> sc.httpApp
+    (ec.httpApp <+> sc.httpApp).orNotFound
 }
