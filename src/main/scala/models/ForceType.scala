@@ -8,7 +8,7 @@ import slick.jdbc.PostgresProfile.api._
 
 object ForceType extends Enumeration {
   type ForceType = Value
-  val Push, Pull, Other = Value
+  val Push, Pull, Legs, Other = Value
   implicit val forceTypeTypedType: TypedType[ForceType] =
     MappedColumnType.base[ForceType, String](
       e => e.toString,

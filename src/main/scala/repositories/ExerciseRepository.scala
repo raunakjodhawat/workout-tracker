@@ -73,4 +73,12 @@ class ExerciseRepository(db: Database, exercises: TableQuery[ExerciseTable]) {
       else IO.raiseError(new Exception("Failed to delete exercise"))
     )
   }
+
+  def getAllExerciseNames: IO[Seq[String]] = {
+    IO.fromFuture(
+      IO(
+        db.run(exercises.map(_.exerciseName).result)
+      )
+    )
+  }
 }

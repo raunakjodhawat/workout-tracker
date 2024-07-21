@@ -60,8 +60,12 @@ const updateAExercise = async (id, updatedExerciseName, updatedMuscleGroup, upda
 }
 
 const getExerciseConstants = async () => { 
-    console.log("sending request");
     const res = await fetch('http://localhost:8080/exercise/defaults');
+    return res.json();
+}
+
+const getAllExerciseNames = async () => {
+    const res = await fetch('http://localhost:8080/exercise/defaults/name');
     return res.json();
 }
 
@@ -70,5 +74,6 @@ export {
     getAllStoredExercises,
     deleteAExercise,
     updateAExercise,
-    addAExercise
+    addAExercise,
+    getAllExerciseNames
 }

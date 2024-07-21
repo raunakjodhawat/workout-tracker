@@ -31,47 +31,17 @@ class ExerciseController(er: ExerciseRepository) {
   val httpApp: Kleisli[IO, Request[IO], Response[IO]] = HttpRoutes
     .of[IO] {
       case GET -> Root / "exercise" / "defaults" =>
-        Ok(getExerciseConstants).map(
-          _.putHeaders(
-            Header.Raw
-              .apply(
-                CIString("Access-Control-Allow-Origin"),
-                "http://localhost:3000"
-              )
-          )
-        )
+        Ok(getExerciseConstants)
+      case GET -> Root / "exercise" / "defaults" / "name" =>
+        Ok(getAllExerciseNames)
       case GET -> Root / "exercise" / "all" =>
-        Ok(getExercises).map(
-          _.putHeaders(
-            Header.Raw
-              .apply(
-                CIString("Access-Control-Allow-Origin"),
-                "http://localhost:3000"
-              )
-          )
-        )
+        Ok(getExercises)
       case GET -> Root / "exercise" / "id" / LongVar(id) =>
         getExerciseById(id) match {
           case Some(exercise) =>
-            Ok(exercise).map(
-              _.putHeaders(
-                Header.Raw
-                  .apply(
-                    CIString("Access-Control-Allow-Origin"),
-                    "http://localhost:3000"
-                  )
-              )
-            )
+            Ok(exercise)
           case None =>
-            NotFound("Exercise not found").map(
-              _.putHeaders(
-                Header.Raw
-                  .apply(
-                    CIString("Access-Control-Allow-Origin"),
-                    "http://localhost:3000"
-                  )
-              )
-            )
+            NotFound("Exercise not found")
         }
       case req @ POST -> Root / "exercise" / "create" =>
         req.decode[Exercise] { exercise =>
@@ -82,15 +52,7 @@ class ExerciseController(er: ExerciseRepository) {
             exercise.forceType,
             exercise.mechanics
           )
-          Ok("Exercise created").map(
-            _.putHeaders(
-              Header.Raw
-                .apply(
-                  CIString("Access-Control-Allow-Origin"),
-                  "http://localhost:3000"
-                )
-            )
-          )
+          Ok("Exercise created")
         }
       case req @ POST -> Root / "exercise" / "edit" / LongVar(id) =>
         req.decode[Exercise] { exercise =>
@@ -102,27 +64,11 @@ class ExerciseController(er: ExerciseRepository) {
             exercise.forceType,
             exercise.mechanics
           )
-          Ok("Exercise updated").map(
-            _.putHeaders(
-              Header.Raw
-                .apply(
-                  CIString("Access-Control-Allow-Origin"),
-                  "http://localhost:3000"
-                )
-            )
-          )
+          Ok("Exercise updated")
         }
       case DELETE -> Root / "exercise" / "delete" / LongVar(id) =>
         deleteExercise(id)
-        Ok("Exercise deleted").map(
-          _.putHeaders(
-            Header.Raw
-              .apply(
-                CIString("Access-Control-Allow-Origin"),
-                "http://localhost:3000"
-              )
-          )
-        )
+        Ok("Exercise deleted")
     }
     .orNotFound
   def getExercises: Seq[DBExercise] = {
@@ -172,6 +118,8 @@ class ExerciseController(er: ExerciseRepository) {
     .unsafeRunSync()
 
   def deleteExercise(id: Long): Unit = er.deleteExercise(id).unsafeRunSync()
+
+  def getAllExerciseNames: Seq[String] = er.getAllExerciseNames.unsafeRunSync()
   def getExerciseConstants: Map[String, SortedSet[String]] = {
     Map(
       "MuscleGroup" -> MuscleGroup.values.map(_.toString),
