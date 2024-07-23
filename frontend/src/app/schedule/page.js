@@ -18,7 +18,7 @@ export default function Schedule() {
     const [allSetTypes, setAllSetTypes] = useState([]);
     const [allUnits, setAllUnits] = useState([]);
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-    const [showCreateScheduleDialog, setShowCreateScheduleDialog] = useState(false);
+    const [showCreateScheduleDialog, setShowCreateScheduleDialog] = useState(true);
 
 
     const createSchedule = () => {
@@ -31,24 +31,23 @@ export default function Schedule() {
         } else {
             setDate(new Date().toISOString().split('T')[0]);
         }
-        getAllSetTypes().then((data) => {
-            setAllSetTypes(data['setType']);
-            setAllUnits(data['weightUnit']);
-        }).catch((error) => {
-            console.error('Error:', error);
-        });
-
-        getAllExerciseNames().then((data) => {
-            setAllExerciseNames(data);
-        }).catch((error) => {
-            console.error('Error:', error);
-        });
+        Promise.all([getAllSetTypes(), getAllExerciseNames()])
+            .then(([setTypeData, exerciseNamesData]) => {
+                // Handle successful responses
+                setAllSetTypes(setTypeData['setType']);
+                setAllUnits(setTypeData['weightUnit']);
+                setAllExerciseNames(exerciseNamesData);
+            })
+            .catch((error) => {
+                // Handle errors from either promise
+                console.error('Error:', error);
+            });
     }, [date]);
 
     return (
         <main>
             <input type="date" className={styles.date} value={date} onChange={(e) => setDate(e.target.value)} />
-            {showCreateScheduleDialog && <CreateSchemaPopupModule allSetTypes={allSetTypes} allExerciseNames={allExerciseNames} allUnits={allUnits} setShowCreateScheduleDialog={setShowCreateScheduleDialog}/>}
+            {showCreateScheduleDialog && <CreateSchemaPopupModule allSetTypes={allSetTypes} allExerciseNames={allExerciseNames} allUnits={allUnits} setShowCreateScheduleDialog={setShowCreateScheduleDialog} />}
             <button type="button" onClick={createSchedule} className={styles.createSchemaButton} />
         </main>
     );

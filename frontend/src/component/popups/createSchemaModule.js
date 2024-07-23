@@ -50,6 +50,7 @@ export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames,
                     const wt = document.getElementById(`setUnitWeight-${i}-${j}-weight`).value;
                     const reps = document.getElementById(`setUnitWeight-${i}-${j}-reps`).value;
                     return {
+                        label: document.getElementById(`setUnitWeight-${i}-${j}-label`).value,
                         weight: (wt === '') ? 0: parseFloat(wt),
                         unit: document.getElementById(`setUnitWeight-${i}-${j}-unit`).value,
                         reps: (reps === '') ? 0: parseInt(reps)
@@ -99,7 +100,7 @@ export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames,
                         </button>
                         <h5>Sets</h5>
                         {exercise.sets.map((set, j) => (
-                            <SetUnitWeight id={`setUnitWeight-${i}-${j}`} key={j} allUnits={allUnits} />
+                            <SetUnitWeight id={`setUnitWeight-${i}-${j}`} key={j} allUnits={allUnits} allLables={Array.from({ length: exercise.sets.length }, (_, index) => `Set: ${index}`)} />
                         ))}
                         <button
                             type="button"
