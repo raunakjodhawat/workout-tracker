@@ -5,7 +5,9 @@ import SetToDropDownConvertor from '../../component/SetToDropDownConvertor.js';
 import { getExerciseConstants, getAllStoredExercises, updateAExercise, deleteAExercise, addAExercise } from '../../services/exercise.js';
 import { useEffect, useState } from "react";
 
+
 export default function Exercise() {
+  const [nameFilter, setNameFilter] = useState('');
   const [storedExercises, setStoredExercises] = useState([]);
   const [muscleGroups, setMuscleGroup] = useState(new Set(['']));
   const [equipment, setEquipment] = useState(new Set(['']));
@@ -19,6 +21,19 @@ export default function Exercise() {
       console.error('Error:', error);
     });
   }
+
+  const filteredExercises = storedExercises.filter(exercise => {
+    console.log(exercise);
+    return (
+      (nameFilter === '' ||
+        exercise.exerciseName.toLowerCase().includes(nameFilter.toLowerCase()) ||
+        exercise.equipment.toLowerCase().includes(nameFilter.toLowerCase()) ||
+        exercise.forceType.toLowerCase().includes(nameFilter.toLowerCase()) ||
+        exercise.mechanics.toLowerCase().includes(nameFilter.toLowerCase()) ||
+        exercise.targetMuscleGroup.toLowerCase().includes(nameFilter.toLowerCase())
+      )
+    );
+  });
   const saveExercise = (id) => {
     // Fetch updated values directly from the DOM elements
     const updatedExerciseName = document.getElementById(`name-${id}`).value;
@@ -79,9 +94,23 @@ export default function Exercise() {
             <th>Mechanics</th>
             <th>Actions</th>
           </tr>
+          <tr>
+          <td colSpan={6}>
+          <div className={styles.filterMenu}>
+              <input
+                className={styles.input}
+                type="text"
+                placeholder="Search"
+                value={nameFilter}
+                onChange={(e) => setNameFilter(e.target.value)}
+              />
+            </div>
+          </td>
+            
+          </tr>
         </thead>
         <tbody>
-          {storedExercises.map((exercise) => {
+          {filteredExercises.map((exercise) => {
             return (
               <tr key={exercise.id}>
                 <td><input id={`name-${exercise.id}`} className={styles.input} type="text" placeholder="Exercise name" defaultValue={exercise.exerciseName} /></td>
@@ -90,13 +119,13 @@ export default function Exercise() {
                 <td><SetToDropDownConvertor id={`forceType-${exercise.id}`} className={styles.select} options={forceType} selected={exercise.forceType} /></td>
                 <td><SetToDropDownConvertor id={`mechanics-${exercise.id}`} className={styles.select} options={mechanics} selected={exercise.mechanics} /></td>
                 <td>
-                  <input className={styles.submit} type="submit" value="Save" onClick={() => saveExercise(exercise.id)} />
-                  <input className={styles.submit} type="submit" value="Delete" onClick={() => deleteExercise(exercise.id)} />
+                  <input className={styles.saveButton} type="submit" value="Save" onClick={() => saveExercise(exercise.id)} />
+                  <input className={styles.deleteButotn} type="submit" value="Delete" onClick={() => deleteExercise(exercise.id)} />
                 </td>
               </tr>
             )
           })}
-          <tr>
+          <tr className={styles.createRow}>
             <td><input id={`name-new`} className={styles.input} type="text" placeholder="Exercise name" /></td>
             <td><SetToDropDownConvertor id={`muscleGroup-new`} className={styles.select} options={muscleGroups} /></td>
             <td><SetToDropDownConvertor id={`equipment-new`} className={styles.select} options={equipment} /></td>

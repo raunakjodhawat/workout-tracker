@@ -43,8 +43,41 @@
     background-color: #0070f3;
     color: #ffffff;
     cursor: pointer;
+    width: 85%;
+    margin: 10px;
 }
 
 .submit:hover {
     background-color: #0051bb;
+}
+
+.createRow {
+    border-radius: 50px;
+    border: 50px;
+    border-color: aquamarine;
+}
+.table tbody tr {
+    border-bottom: 1px solid #ddd;
+  }
+
+.saveButton {
+    margin-left: 10px;
+    width: 40%;
+    background-color: green;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.deleteButotn {
+    margin-left: 10px;
+    width: 40%;
+    background-color: red;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
 }

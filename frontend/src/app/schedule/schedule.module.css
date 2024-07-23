@@ -6,6 +6,7 @@
     margin-bottom: 0.2rem;
 }
 .scheduleTable {
+    border: 1px solid #000;
     text-align: center;
     width: 100%;
 }
@@ -22,6 +23,7 @@
 }
 
 .exerciseTable {
+    border: 1px solid #000;
     text-align: center;
     width: 100%;
 }
@@ -91,4 +93,37 @@
 
 .removeButton:hover {
     background-color: #c82333;
+}
+
+
+.createSchemaButton {
+    position: fixed; /* Keep the button fixed in the viewport */
+    bottom: 20px;    /* Space from the bottom */
+    right: 20px;     /* Space from the right edge */
+    width: 60px;     /* Width of the button */
+    height: 60px;    /* Height of the button */
+    border-radius: 50%; /* Make the button round */
+    background-color: #007bff; /* Button background color */
+    color: #fff;     /* Text color */
+    font-size: 24px; /* Font size for the plus sign */
+    border: none;    /* Remove default border */
+    display: flex;   /* Center the text */
+    align-items: center; /* Center text vertically */
+    justify-content: center; /* Center text horizontally */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for better visibility */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.createSchemaButton:hover {
+    background-color: #0056b3; /* Darker shade for hover effect */
+}
+
+.createSchemaButton:active {
+    background-color: #004085; /* Even darker shade when button is clicked */
+}
+
+.createSchemaButton::before {
+    content: '+'; /* Plus sign as button content */
+    font-family: Arial, sans-serif; /* Font for the plus sign */
 }
