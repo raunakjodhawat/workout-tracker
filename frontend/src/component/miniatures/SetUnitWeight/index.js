@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './setUnitWeight.module.css';
 import DropSet from '../DropSet';
+import SameWeightAndRepsSet from '../SameWeightAndRepsSet';
 
 export default function SetUnitWeight({ id, allUnits, allLables, allSetTypes }) {
     const [selectedSetType, setSelectedSetType] = React.useState('DropSet');
@@ -28,7 +29,7 @@ export default function SetUnitWeight({ id, allUnits, allLables, allSetTypes }) 
                 break;
             }
             case "SameWeightAndRepsSet": {
-                break;
+                return <SameWeightAndRepsSet allUnits={allUnits} />;
             }
             case "SameWeightVariableRepsSet": {
                 break;
