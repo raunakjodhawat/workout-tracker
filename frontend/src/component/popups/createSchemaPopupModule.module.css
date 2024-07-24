@@ -43,9 +43,10 @@
 }
 
 .addButton {
-    margin-top: 10px;
+    margin: 10px;
+    width: 90%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #579639;
     color: white;
     border: none;
     border-radius: 5px;
@@ -67,4 +68,22 @@
 
 .submitButton:hover {
     background-color: #218838;
+}
+
+.setTypeRemove {
+    display: flex;
+
+}
+
+.setTypeRemoveButton {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #c82333;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.setTypeRemoveButton:hover {
+    background-color: #ffffff;
 }

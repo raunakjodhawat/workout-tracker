@@ -3,7 +3,6 @@ const getAllStoredExercises = async () => {
     if (res.ok) {
         const jsonResponse = await res.json();
         if (jsonResponse.length > 0) {
-            console.log(`Returning ${jsonResponse.length} exercises`);
             return jsonResponse;
         } else throw new Error("No exercises found");
     } else throw new Error("Failed to fetch exercises");
@@ -59,7 +58,7 @@ const updateAExercise = async (id, updatedExerciseName, updatedMuscleGroup, upda
     } else throw new Error("Failed to update exercise");
 }
 
-const getExerciseConstants = async () => { 
+const getExerciseConstants = async () => {
     const res = await fetch('http://localhost:8080/exercise/defaults');
     return res.json();
 }

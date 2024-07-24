@@ -21,7 +21,7 @@ export default function DropSet({ allUnits }) {
                 onChange={(e) => setSelectedUnit(e.target.value)}
                 value={selectedUnit}
                 className={styles.unitSelect}
-                >
+            >
                 {Array.from(allUnits).map((v, i) => (
                     <option key={i}>{v}</option>
                 ))}

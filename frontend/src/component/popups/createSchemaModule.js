@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import SetToDropDownConvertor from '../SetToDropDownConvertor';
 import SetUnitWeight from '../miniatures/SetUnitWeight';
 import styles from './createSchemaPopupModule.module.css';
 
 import Multiselect from 'multiselect-react-dropdown';
 
-export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames, allUnits, setShowCreateScheduleDialog }) {
-    const [exerciseType, setExerciseType] = useState(allExerciseNames.map((eName, i) => {
-        return {
-            name: eName,
-            id: i
-        }
-    }));
+export default function CreateSchemaPopupModule({ allExerciseNames, allUnits, setShowCreateScheduleDialog }) {
+    const [allSetTypes, setAllSetTypes] = useState([]);
+    const [exerciseType, setExerciseType] = useState();
+    const [selectedExercises, setSelectedExercises] = useState([]);
+    const [sets, setSets] = useState([0]);
     useEffect(() => {
         setExerciseType(allExerciseNames.map((eName, i) => {
             return {
@@ -19,7 +16,29 @@ export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames,
                 id: i
             }
         }));
-    }, [allExerciseNames]);
+        switch (selectedExercises.length) {
+            case 0: {
+                setAllSetTypes(['Please select a exercise']);
+                break;
+            }
+            case 1: {
+                setAllSetTypes(['NormalSet', 'DropSet']);
+                break;
+            }
+            case 2: {
+                setAllSetTypes(['SuperSet']);
+                break;
+            }
+            case 3: {
+                setAllSetTypes(['TriSet']);
+                break;
+            }
+            default: {
+                setAllSetTypes(['GiantSet']);
+                break;
+            }
+        }
+    }, [allExerciseNames, selectedExercises]);
     const [exercises, setExercises] = useState([
         {
             exerciseName: '',
@@ -27,34 +46,6 @@ export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames,
         }
     ]);
 
-    const addSet = (exerciseIndex) => {
-        const updatedExercises = exercises.map((exercise, i) => {
-            if (i === exerciseIndex) {
-                return { ...exercise, sets: [...exercise.sets, { weight: '', unit: '', reps: '' }] };
-            }
-            return exercise;
-        });
-        setExercises(updatedExercises);
-    };
-
-    const removeSet = (exerciseIndex, setIndex) => {
-        const updatedExercises = exercises.map((exercise, i) => {
-            if (i === exerciseIndex) {
-                const updatedSets = exercise.sets.filter((_, j) => j !== setIndex);
-                return { ...exercise, sets: updatedSets };
-            }
-            return exercise;
-        });
-        setExercises(updatedExercises);
-    };
-
-    const addExercise = () => {
-        setExercises([...exercises, { exerciseName: '', sets: [{ weight: '', unit: '', reps: '' }] }]);
-    };
-
-    const removeExercise = (exerciseIndex) => {
-        setExercises(exercises.filter((_, i) => i !== exerciseIndex));
-    };
 
     const handleSubmit = () => {
         const sanitizedExercises = exercises.map((exercise, i) => {
@@ -81,6 +72,16 @@ export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames,
     const togglePopup = () => {
         setShowCreateScheduleDialog(false);
     };
+    const onMultiSelectChange = (selectedList, _) => {
+        setSelectedExercises(selectedList.map((e) => e.name));
+    }
+    const addSet = () => {
+        setSets([...sets, sets.length]);
+    }
+
+    const removeSet = (index) => {
+        setSets(sets.filter((_, i) => i !== index));
+    }
 
     return (
         <div className={styles.createSchemaPopup}>
@@ -93,10 +94,26 @@ export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames,
                 <Multiselect
                     options={exerciseType}
                     displayValue="name"
+                    onSelect={onMultiSelectChange}
+                    onRemove={onMultiSelectChange}
                 />
-                <button type="button" className={styles.submitButton} onClick={handleSubmit}>
-                    Submit
-                </button>
+                {selectedExercises.length > 0 && (
+                    <>
+                        {sets.map((_, i) => {
+                            return (
+                                <div key={i} className={styles.setTypeRemove}>
+                                    <SetUnitWeight id={i} allSetTypes={allSetTypes} allUnits={allUnits} selectedExercises={selectedExercises} />
+                                    <button type="button" className={styles.setTypeRemoveButton} onClick={() => removeSet(i)}>Remove</button>
+                                </div>
+                            );
+                        })}
+                        <button type="button" className={styles.addButton} onClick={addSet}>Add A Set</button>
+                        <button type="button" className={styles.submitButton} onClick={handleSubmit}>
+                            Submit
+                        </button>
+                    </>
+                )}
+
             </div>
         </div>
     );
