@@ -2,9 +2,10 @@ import React from 'react';
 import styles from './setUnitWeight.module.css';
 import DropSet from '../DropSet';
 import SameWeightAndRepsSet from '../SameWeightAndRepsSet';
+import SameWeightVariableRepsSet from '../SameWeightVariableRepsSet';
 
 export default function SetUnitWeight({ id, allUnits, allLables, allSetTypes }) {
-    const [selectedSetType, setSelectedSetType] = React.useState('DropSet');
+    const [selectedSetType, setSelectedSetType] = React.useState('SameWeightVariableRepsSet');
     const [exerciseName, setExerciseName] = React.useState('');
     const [sets, setSets] = React.useState([{ SetType: '', weight: '', unit: '', reps: '' }]);
     const [sanitizedOutput, setSanitizedOutput] = React.useState({
@@ -32,7 +33,7 @@ export default function SetUnitWeight({ id, allUnits, allLables, allSetTypes }) 
                 return <SameWeightAndRepsSet allUnits={allUnits} />;
             }
             case "SameWeightVariableRepsSet": {
-                break;
+                return <SameWeightVariableRepsSet allUnits={allUnits} />;
             }
             case "TriSet": {
                 break;

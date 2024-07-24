@@ -4,14 +4,6 @@ import styles from './sameWeightAndRepsSet.module.css';
 
 export default function SameWeightAndRepsSet({ allUnits }) {
     const [selectedUnit, setSelectedUnit] = useState('kg');
-    const [weightAndReps, setWeightAndReps] = useState([{ weight: '', reps: '' }]);
-
-    const addWeightAndReps = () => {
-        setWeightAndReps([...weightAndReps, { weight: '', reps: '' }]);
-    };
-    const removeWeightAndReps = (index) => {
-        setWeightAndReps(weightAndReps.filter((_, i) => i !== index));
-    }
 
     return (
         <div>
