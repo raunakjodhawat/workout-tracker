@@ -1,9 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SetToDropDownConvertor from '../SetToDropDownConvertor';
 import SetUnitWeight from '../miniatures/SetUnitWeight';
 import styles from './createSchemaPopupModule.module.css';
 
+import Multiselect from 'multiselect-react-dropdown';
+
 export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames, allUnits, setShowCreateScheduleDialog }) {
+    const [exerciseType, setExerciseType] = useState(allExerciseNames.map((eName, i) => {
+        return {
+            name: eName,
+            id: i
+        }
+    }));
+    useEffect(() => {
+        setExerciseType(allExerciseNames.map((eName, i) => {
+            return {
+                name: eName,
+                id: i
+            }
+        }));
+    }, [allExerciseNames]);
     const [exercises, setExercises] = useState([
         {
             exerciseName: '',
@@ -51,9 +67,9 @@ export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames,
                     const reps = document.getElementById(`setUnitWeight-${i}-${j}-reps`).value;
                     return {
                         label: document.getElementById(`setUnitWeight-${i}-${j}-label`).value,
-                        weight: (wt === '') ? 0: parseFloat(wt),
+                        weight: (wt === '') ? 0 : parseFloat(wt),
                         unit: document.getElementById(`setUnitWeight-${i}-${j}-unit`).value,
-                        reps: (reps === '') ? 0: parseInt(reps)
+                        reps: (reps === '') ? 0 : parseInt(reps)
                     }
                 })
             }
@@ -72,51 +88,12 @@ export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames,
                 <span className={styles.closeButton} onClick={togglePopup}>&times;</span>
                 <div className={styles.formSection}>
                     <label htmlFor="date">Date:</label>
-                    <input type="date" id="date" defaultValue={new Date().toISOString().split('T')[0]}/>
+                    <input type="date" id="date" defaultValue={new Date().toISOString().split('T')[0]} />
                 </div>
-                <div className={styles.formSection}>
-                    
-                </div>
-                <div className={styles.formSection}>
-                    <h4>Exercises</h4>
-                    <button type="button" className={styles.addButton} onClick={addExercise}>
-                        Add Exercise
-                    </button>
-                </div>
-                {exercises.map((exercise, i) => (
-                    <div key={i} className={styles.formSection}>
-                        <SetToDropDownConvertor
-                            id={`exerciseName-${i}`}
-                            options={allExerciseNames}
-                            selected={exercise.exerciseName}
-                        />
-                        <button
-                            type="button"
-                            className={styles.addButton}
-                            onClick={() => removeExercise(i)}
-                        >
-                            Remove Exercise
-                        </button>
-                        <h5>Sets</h5>
-                        {exercise.sets.map((set, j) => (
-                            <SetUnitWeight id={`setUnitWeight-${i}-${j}`} key={j} allUnits={allUnits} allLables={Array.from({ length: exercise.sets.length }, (_, index) => `Set: ${index}`)} allSetTypes = {allSetTypes} />
-                        ))}
-                        <button
-                            type="button"
-                            className={styles.addButton}
-                            onClick={() => addSet(i)}
-                        >
-                            Add Set
-                        </button>
-                        <button
-                            type="button"
-                            className={styles.addButton}
-                            onClick={() => removeSet(i, exercise.sets.length - 1)}
-                        >
-                            Remove Set
-                        </button>
-                    </div>
-                ))}
+                <Multiselect
+                    options={exerciseType}
+                    displayValue="name"
+                />
                 <button type="button" className={styles.submitButton} onClick={handleSubmit}>
                     Submit
                 </button>
