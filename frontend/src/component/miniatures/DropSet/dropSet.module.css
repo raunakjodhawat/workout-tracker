@@ -1,0 +1,52 @@
+.labels {
+    justify-content: space-between;
+    margin: 10px;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+.unitSelect {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 65%;
+}
+.unitSelect option {
+    justify-content: space-between;
+    margin: 10px;
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: lighter;
+}
+
+.removeButton{
+    background-color: #dc3545;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 10px;
+}
+.removeButton:hover{
+    background-color: #c82333;
+}
+.addButton{
+    background-color: #007bff;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    margin: 10px;
+    width: 65%;
+}
+.addButton:hover{
+    background-color: #0056b3;
+}
+.input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 15%;
+}

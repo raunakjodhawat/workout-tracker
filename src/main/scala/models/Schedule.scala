@@ -92,7 +92,7 @@ case class DBSchedule(
 ) {
   import Schedule.simpleDateFormat
   def toSchedule: Schedule = Schedule(
-    setType = decode[SetType](setType).getOrElse(SetType.NormalSet),
+    setType = decode[SetType](setType).getOrElse(SetType.PyramidSet),
     exercisesPerformed = decode[Seq[ExerciseSet]](exercisesPerformed)
       .getOrElse(Seq.empty[ExerciseSet]),
     date = simpleDateFormat.parse(date)

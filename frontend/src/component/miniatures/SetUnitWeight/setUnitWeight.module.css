@@ -1,7 +1,4 @@
 .SetUnitWeight {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     column-fill: unset;
     margin: 10px;

@@ -75,8 +75,7 @@ export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames,
                     <input type="date" id="date" defaultValue={new Date().toISOString().split('T')[0]}/>
                 </div>
                 <div className={styles.formSection}>
-                    <label htmlFor="setType">Set Type:</label>
-                    <SetToDropDownConvertor id="setType" options={allSetTypes} />
+                    
                 </div>
                 <div className={styles.formSection}>
                     <h4>Exercises</h4>
@@ -100,7 +99,7 @@ export default function CreateSchemaPopupModule({ allSetTypes, allExerciseNames,
                         </button>
                         <h5>Sets</h5>
                         {exercise.sets.map((set, j) => (
-                            <SetUnitWeight id={`setUnitWeight-${i}-${j}`} key={j} allUnits={allUnits} allLables={Array.from({ length: exercise.sets.length }, (_, index) => `Set: ${index}`)} />
+                            <SetUnitWeight id={`setUnitWeight-${i}-${j}`} key={j} allUnits={allUnits} allLables={Array.from({ length: exercise.sets.length }, (_, index) => `Set: ${index}`)} allSetTypes = {allSetTypes} />
                         ))}
                         <button
                             type="button"

@@ -8,7 +8,17 @@ import slick.jdbc.PostgresProfile.api._
 
 object SetType extends Enumeration {
   type SetType = Value
-  val SuperSet, NormalSet, DropSet, Other = Value
+
+  /** SuperSet - Two exercises performed back to back with no rest in between
+    * PyramidSet - Increase weight and decrease reps with each set
+    * SameWeightAndRepsSet - Same weight and same reps for all sets
+    * SameWeightVariableRepsSet - Same weight and variable reps for all sets
+    * DropSet - Decrease weight with each set
+    * TriSet - Three exercises performed back to back with no rest in between
+    * GiantSet - Four or more exercises performed back to back with no rest in between
+    */
+  val SuperSet, PyramidSet, SameWeightAndRepsSet, SameWeightVariableRepsSet,
+      DropSet, TriSet, GiantSet = Value
   implicit val setTypeTypedType: TypedType[SetType] =
     MappedColumnType.base[SetType, String](
       e => e.toString,

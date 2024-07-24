@@ -1,30 +1,56 @@
-import SetToDropDownConvertor from '../../SetToDropDownConvertor.js';
 import React from 'react';
 import styles from './setUnitWeight.module.css';
+import DropSet from '../DropSet';
 
-export default function SetUnitWeight({ id, allUnits, allLables }) {
+export default function SetUnitWeight({ id, allUnits, allLables, allSetTypes }) {
+    const [selectedSetType, setSelectedSetType] = React.useState('DropSet');
+    const [exerciseName, setExerciseName] = React.useState('');
+    const [sets, setSets] = React.useState([{ SetType: '', weight: '', unit: '', reps: '' }]);
+    const [sanitizedOutput, setSanitizedOutput] = React.useState({
+        exerciseName: '',
+        sets: [{ SetType: '', weight: '', unit: '', reps: '' }]
+    });
+
+    const changeSetType = (e) => {
+        console.log(e.target.value);
+        setSelectedSetType(e.target.value);
+    };
+
+    const AddSetOptions = () => {
+        switch (selectedSetType) {
+            case "DropSet": {
+                return <DropSet allUnits={allUnits}/>;
+            }
+            case "GiantSet": {
+                break;
+            }
+            case "PyramidSet": {
+                break;
+            }
+            case "SameWeightAndRepsSet": {
+                break;
+            }
+            case "SameWeightVariableRepsSet": {
+                break;
+            }
+            case "TriSet": {
+                break;
+            }
+            case "SuperSet": {
+                break;
+            }
+        }
+    }
+
     return (
         <div className={styles.SetUnitWeight}>
-            Label: 
-            <SetToDropDownConvertor
-                options={allLables}
-                id={`${id}-label`}
-                className={styles.SetUnitWeightDropDown}
-            />
-            Weight: <input
-                type="number"
-                id={`${id}-weight`}
-                className={styles.SetUnitWeighInput}
-            />
-            <SetToDropDownConvertor
-                options={allUnits}
-                id={`${id}-unit`}
-                className={styles.SetUnitWeightDropDown}
-            />
-            Reps: <input
-                type="number"
-                id={`${id}-reps`}
-                className={styles.SetUnitWeighInput} />
+            <label htmlFor="setType">Type:</label>
+            <select id={`${id}-setType`} className={styles.select} required onChange={changeSetType}>
+                {Array.from(allSetTypes).map((v, i) => (
+                    <option key={i}>{v}</option>
+                ))}
+            </select>
+            <AddSetOptions />
         </div>
     );
 }

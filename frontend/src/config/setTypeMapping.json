@@ -1,0 +1,15 @@
+{
+    "SuperSet": {
+        "description": "Two exercises performed back to back with no rest in between",
+        "exerciseDimensions": [{
+            "exercises": [{
+                "exerciseName": "String",
+                "reps": [{
+                    "repCount": "Number",
+                    "weight": "Number",
+                    "unit": "String"
+                }]
+            }]
+        }]
+    }
+}
