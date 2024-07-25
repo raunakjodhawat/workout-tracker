@@ -14,6 +14,8 @@
 }
 
 .createSchemaPopupContent {
+    height: 80%;
+    overflow: scroll;
     background-color: #fff;
     padding: 20px;
     border: 1px solid #888;
@@ -57,25 +59,13 @@
     background-color: #0056b3;
 }
 
-.submitButton {
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.submitButton:hover {
-    background-color: #218838;
-}
-
-.setTypeRemove {
+.individualExerciseSet {
     display: flex;
-
+    justify-content: space-between;
+    margin: 10px;
 }
 
-.setTypeRemoveButton {
+.removeButton {
     padding: 10px;
     border-radius: 5px;
     border: none;
@@ -84,6 +74,6 @@
     margin: 10px;
 }
 
-.setTypeRemoveButton:hover {
+.removeButton:hover {
     background-color: #ffffff;
 }
