@@ -2,9 +2,8 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './setUnitWeight.module.css';
 import DropSet from '../DropSet';
-import SameWeightAndRepsSet from '../SameWeightAndRepsSet';
-import SameWeightVariableRepsSet from '../SameWeightVariableRepsSet';
 import NormalSet from '../NormalSet';
+import SuperSet from '../SuperSet';
 
 export default function SetUnitWeight({ id, allUnits, selectedExercises, allSetTypes }) {
     const [selectedSetType, setSelectedSetType] = useState('SameWeightVariableRepsSet');
@@ -32,23 +31,8 @@ export default function SetUnitWeight({ id, allUnits, selectedExercises, allSetT
             case "DropSet": {
                 return <DropSet allUnits={allUnits} />;
             }
-            case "GiantSet": {
-                break;
-            }
-            case "PyramidSet": {
-                break;
-            }
-            case "SameWeightAndRepsSet": {
-                return <SameWeightAndRepsSet allUnits={allUnits} />;
-            }
-            case "SameWeightVariableRepsSet": {
-                return <SameWeightVariableRepsSet allUnits={allUnits} />;
-            }
-            case "TriSet": {
-                break;
-            }
             case "SuperSet": {
-                break;
+                return <SuperSet allUnits={allUnits} exerciseNames={selectedExercises} />;
             }
             default:
                 break;

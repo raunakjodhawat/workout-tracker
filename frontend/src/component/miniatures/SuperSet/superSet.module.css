@@ -1,0 +1,63 @@
+.addButton {
+    margin: 10px;
+    width: 90%;
+    padding: 10px;
+    background-color: #579639;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.addButton:hover {
+    background-color: #0056b3;
+}
+
+.removeButton {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #c82333;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.removeButton:hover {
+    background-color: #ffffff;
+}
+
+.unitSelect {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: fit-content;
+}
+
+.unitSelect option {
+    justify-content: space-between;
+    margin: 5px;
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: lighter;
+}
+
+.exerciseNameSelect {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: fit-content
+}
+
+.input {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 8%;
+}
+.exericiseNameSelector {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
