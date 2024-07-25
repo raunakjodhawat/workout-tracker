@@ -16,16 +16,8 @@ export default function IndividualExerciseSet({ individualSetOfExercises, allUni
                 setAllSetTypes(['NormalSet', 'DropSet']);
                 break;
             }
-            case 2: {
-                setAllSetTypes(['SuperSet']);
-                break;
-            }
-            case 3: {
-                setAllSetTypes(['TriSet']);
-                break;
-            }
             default: {
-                setAllSetTypes(['GiantSet']);
+                setAllSetTypes(['SuperSet']);
                 break;
             }
         }
